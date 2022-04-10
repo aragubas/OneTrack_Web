@@ -35,6 +35,8 @@ import ChannelPlaylist from "./components/ChannelPlaylist.vue";
   --scrollbar-thumb: rgb(129, 168, 196);
 
   --track-line-background: rgb(98, 145, 184);
+
+  --active-element-outline: rgb(129, 168, 196);
 }
 
 body {

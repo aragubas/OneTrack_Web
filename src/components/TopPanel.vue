@@ -17,7 +17,6 @@ import PatternMatrix from "./PatternMatrix.vue";
 
     <div class="version-container">
       <img src="Logo.png" />
-      <p>v1.0</p>
     </div>
   </header>
 </template>

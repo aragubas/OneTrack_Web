@@ -37,7 +37,7 @@ watch(MatrixPosition, () => {
   }
 });
 
-function keyBruh(event: KeyboardEvent) {
+function handleKeyboard(event: KeyboardEvent) {
   if (event.key == "ArrowDown") {
     MatrixPosition.value = MatrixPosition.value + 1;
 
@@ -82,7 +82,7 @@ function keyBruh(event: KeyboardEvent) {
 
 <template>
   <div class="container">
-    <ol tabindex="1" @keydown.prevent="keyBruh" id="pattern-matrix">
+    <ol tabindex="1" @keydown.prevent="handleKeyboard" id="pattern-matrix">
       <li
         v-for="line in PatternMatrix"
         :key="line.Position"
@@ -145,8 +145,8 @@ ol {
   height: 100%;
 }
 
-.ol:focus {
-  outline: 2px solid red;
+ol:focus {
+  outline: 2px solid var(--active-element-outline);
 }
 
 li {
