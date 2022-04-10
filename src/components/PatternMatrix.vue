@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, watch } from "@vue/runtime-core";
 import { ref } from "vue";
-import { PatternMatrix, MatrixPosition, Channels } from "../SongData";
+import { PatternMatrix, MatrixPosition, ChannelCount } from "../SongData";
 var SelectedPosition = ref(0);
 
 function getTrackNumber(number: number): string {
@@ -56,12 +56,12 @@ function handleKeyboard(event: KeyboardEvent) {
     SelectedPosition.value -= 1;
 
     if (SelectedPosition.value < 0) {
-      SelectedPosition.value = Channels.value - 1;
+      SelectedPosition.value = ChannelCount.value - 1;
     }
   } else if (event.key == "ArrowRight") {
     SelectedPosition.value += 1;
 
-    if (SelectedPosition.value > Channels.value - 1) {
+    if (SelectedPosition.value > ChannelCount.value - 1) {
       SelectedPosition.value = 0;
     }
   } else {
@@ -87,6 +87,7 @@ function handleKeyboard(event: KeyboardEvent) {
         v-for="line in PatternMatrix"
         :key="line.Position"
         :id="'patternmatrix-line-' + line.Position"
+        :class="[line.Position == MatrixPosition ? 'active' : '']"
       >
         <p
           class="line-number"
@@ -116,57 +117,63 @@ function handleKeyboard(event: KeyboardEvent) {
 
 <style scoped>
 .editable-paragraph {
-  color: lightgray;
+  color: var(--text-muted);
+}
+
+.editable-paragraph:focus {
+  outline: none;
 }
 
 .editable-paragraph.active {
-  color: rgb(230, 230, 240);
+  color: var(--text-normal);
 }
 
 .editable-paragraph.active.selected {
-  color: white;
+  color: var(--text-bright);
   text-decoration: underline;
 }
 
 .container {
   display: flex;
-  background: var(--panels-color);
+  background: var(--background-secondary);
   height: 3.5rem;
   width: 20rem;
+  user-select: none;
 }
 
 ol {
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
   overflow-y: hidden;
   width: 100%;
   height: 100%;
 }
 
 ol:focus {
-  outline: 2px solid var(--active-element-outline);
+  outline: 2px solid var(--background-secondary-alt);
 }
 
 li {
   display: flex;
   gap: 0.5rem;
-  background: var(--track-line-background);
   padding: 0 0.2rem;
+}
+
+li.active {
+  background: var(--background-accent);
 }
 
 .lines {
   display: flex;
   gap: 0.2rem;
-  color: var(--line-number-color);
 }
 
 .line-number {
-  color: var(--line-number-color);
+  color: var(--text-muted);
 }
 
 .line-number.active {
-  color: white;
+  color: var(--text-bright);
 }
 </style>

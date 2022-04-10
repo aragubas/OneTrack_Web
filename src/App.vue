@@ -18,29 +18,30 @@ import ChannelPlaylist from "./components/ChannelPlaylist.vue";
 }
 
 :root {
-  --background-color: rgb(98, 145, 184);
-  --controls-color: rgb(119, 170, 210);
-  --panels-color: rgb(112, 152, 187);
+  /* Backgrounds */
+  --background-primary: rgb(40, 42, 54);
+  --background-secondary: rgb(50, 52, 68);
+  --background-secondary-alt: rgb(60, 62, 78);
+  --background-tertiary: rgb(70, 72, 88);
+  --background-floating: rgb(60, 62, 78);
+  --background-modifier-selected: rgba(90, 92, 108, 0.35);
+  --background-accent: rgb(70, 72, 88);
 
-  --foreground-normal: rgb(230, 230, 245);
-  --foreground-active: white;
-  --line-number-color: rgb(210, 210, 230);
+  /* Shadows */
+  --boxShadow-elevation-high: 0px 0px 8px rgba(0, 2, 12, 0.5);
 
-  --control-border-normal: rgb(129, 168, 196);
-  --control-border-active: rgb(98, 158, 194);
+  /* Scrollbars */
+  --scrollbar-auto-thumb: rgb(60, 62, 78);
+  --scrollbar-auto-track: rgb(50, 52, 68);
 
-  --control-background-active: rgb(129, 168, 196);
-
-  --scrollbar-background: rgb(98, 158, 194);
-  --scrollbar-thumb: rgb(129, 168, 196);
-
-  --track-line-background: rgb(98, 145, 184);
-
-  --active-element-outline: rgb(129, 168, 196);
+  /* Text Colors */
+  --text-muted: rgb(110, 112, 128);
+  --text-normal: rgb(220, 222, 232);
+  --text-bright: rgb(242, 242, 255);
 }
 
 body {
-  background: var(--background-color);
+  background: var(--background-primary);
   font-family: "PressStart2P";
   font-size: 8px;
   color: white;
@@ -59,6 +60,11 @@ ul,
 ol {
   margin: 0;
   padding: 0;
+}
+
+ol,
+ul {
+  list-style-type: none;
 }
 
 *::-webkit-scrollbar {
