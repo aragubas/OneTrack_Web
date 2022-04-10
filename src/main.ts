@@ -1,4 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { NewFile } from "./SongData";
 
-createApp(App).mount('#app')
+NewFile();
+createApp(App).mount("#app");

@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import TopPanel from "./components/TopPanel.vue";
+import PatternMatrix from "./components/PatternMatrix.vue";
+import ChannelPlaylist from "./components/ChannelPlaylist.vue";
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 </script>
 
 <template>
   <TopPanel></TopPanel>
+  <ChannelPlaylist></ChannelPlaylist>
 </template>
 
 <style>
@@ -21,7 +24,7 @@ import TopPanel from "./components/TopPanel.vue";
 
   --foreground-normal: rgb(230, 230, 245);
   --foreground-active: white;
-  --line-number-color: rgb(210, 210, 230)
+  --line-number-color: rgb(210, 210, 230);
 
   --control-border-normal: rgb(129, 168, 196);
   --control-border-active: rgb(98, 158, 194);
