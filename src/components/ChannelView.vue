@@ -49,11 +49,12 @@ const selectedColumnChar = computed(() => {
 
 });
 
-let currentPattern = ref(
-  Channels.value[props.channelID].Patterns[
+const currentPattern = computed(() => 
+{
+  return Channels.value[props.channelID].Patterns[
     PatternMatrix.value[MatrixPosition.value].Pattern[props.channelID].Pattern
   ]
-);
+})
 
 // Change selected pattern when needle position changes
 watch(ChannelNeedlePosition, () => {

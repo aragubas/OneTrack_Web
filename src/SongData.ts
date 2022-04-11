@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 
 export var Channels = ref(Array<Channel>());
 export var PatternMatrix = ref(Array<PatternMatrixLine>());
@@ -89,13 +89,16 @@ export function NewFile() {
 
   for (var i = 0; i < ChannelCount.value; i++) {
     let patterns = Array<Pattern>();
-    let notes = Array<Note>();
 
-    for (let i2 = 0; i2 < PatternLength.value; i2++) {
-      notes.push(new Note(0, 0, "________", i2));
+    for (let i3 = 0; i3 < 10; i3++) {
+      let notes = Array<Note>();
+
+      for (let i2 = 0; i2 < PatternLength.value; i2++) {
+        notes.push(new Note(0, 0, "________", i2));
+      }
+
+      patterns.push(new Pattern(i3, notes));
     }
-
-    patterns.push(new Pattern(0, notes));
 
     Channels.value.push(new Channel(i, patterns));
   }
