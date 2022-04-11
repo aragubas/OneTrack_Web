@@ -6,6 +6,8 @@ import {
   PatternMatrix,
   ChannelNeedlePosition,
   PatternLength,
+Notes,
+Editor_CurrentScale,
 } from "../SongData";
 
 const props = defineProps({ channelID: { required: true, type: Number } });
@@ -18,6 +20,7 @@ const effectColumnWidth = 8;
 const maxColumnWidth =
   noteColumnWidth + instrumentColumnWidth + effectColumnWidth;
 
+// Get selected column
 const selectedColumnIndex = computed(() => {
   if (selectedColumn.value < noteColumnWidth) {
     return 0;
@@ -29,6 +32,7 @@ const selectedColumnIndex = computed(() => {
   }
 });
 
+// Get selected character of current column
 const selectedColumnChar = computed(() => {
   if (selectedColumnIndex.value == 0)
   {
@@ -41,15 +45,8 @@ const selectedColumnChar = computed(() => {
   } if (selectedColumnIndex.value == 2)
   {
     return Math.abs(selectedColumnIndex.value - selectedColumn.value + 1);
-    
   }
 
-});
-
-var channelThis: HTMLElement | null = null;
-
-onMounted(() => {
-  channelThis = document.getElementById("pattern-matrix");
 });
 
 let currentPattern = ref(
@@ -108,7 +105,27 @@ function handleKeyboard(event: KeyboardEvent) {
       selectedColumn.value = maxColumnWidth - 1;
     }
   }
+
+  if (selectedColumnIndex.value == 0)
+  {
+    let key = event.key;
+    let note = Notes.C0;
+    if (key.length > 1) { return; }
+
+    if (key == 'z')
+    {
+      console.log(Notes);
+    }
+ 
+    currentPattern.value.Notes[ChannelNeedlePosition.value].pitch = note;
+  }
 }
+
+function getNoteString(pitch: number): string
+{
+  return Notes[pitch].padEnd(3, '-');
+}
+
 </script>
 
 <template>
@@ -140,7 +157,7 @@ function handleKeyboard(event: KeyboardEvent) {
         ]"
         :id="'viewnote-' + note.UID"
       >
-        <p :class="selectedColumnIndex == 0 ? 'selected' : ''">000</p>
+        <p :class="selectedColumnIndex == 0 ? 'selected' : ''">{{note.pitch < 16 ? '---' : getNoteString(note.pitch)}}</p>
         
         <p class="multichar">
           <p v-for="(char, index) in note.instrument_number.toString().padStart(2, '0')" :key="index" :class="selectedColumnIndex == 1 && selectedColumnChar == index ? 'selected' : ''">
