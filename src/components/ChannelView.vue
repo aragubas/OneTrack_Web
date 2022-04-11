@@ -10,6 +10,7 @@ import {
 
 const props = defineProps({ channelID: { required: true, type: Number } });
 let selectedColumn = ref(0);
+let hasFocus = ref(false);
 
 const noteColumnWidth = 1;
 const instrumentColumnWidth = 2;
@@ -80,13 +81,21 @@ function handleKeyboard(event: KeyboardEvent) {
       </nav>
     </div>
 
-    <ol tabindex="0" @keydown="handleKeyboard">
+    <ol
+      tabindex="0"
+      @keydown="handleKeyboard"
+      @focusin="hasFocus = true"
+      @focusout="hasFocus = false"
+    >
       <li
         class="pattern-line"
         v-for="note in currentPattern.Notes"
         :key="note.UID"
         tabindex="0"
-        :class="ChannelNeedlePosition == note.index ? 'selected' : ''"
+        :class="[
+          ChannelNeedlePosition == note.index ? 'selected' : '',
+          hasFocus ? 'focused' : 'unfocused',
+        ]"
         :id="'viewnote-' + note.UID"
       >
         <p>000</p>
@@ -121,6 +130,7 @@ ol:focus-within {
 .pattern-line {
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
   user-select: none;
   background: var(--background-secondary);
   color: var(--text-muted);
@@ -132,6 +142,10 @@ ol:focus-within {
 
 .pattern-line.selected {
   background: var(--background-secondary-alt);
+}
+
+.pattern-line.selected.focused {
+  background: var(--background-tertiary);
   color: var(--text-normal);
 }
 </style>
