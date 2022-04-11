@@ -15,9 +15,35 @@ let hasFocus = ref(false);
 const noteColumnWidth = 1;
 const instrumentColumnWidth = 2;
 const effectColumnWidth = 8;
+const maxColumnWidth =
+  noteColumnWidth + instrumentColumnWidth + effectColumnWidth;
 
 const selectedColumnIndex = computed(() => {
-  return selectedColumn.value * noteColumnWidth;
+  if (selectedColumn.value < noteColumnWidth) {
+    return 0;
+  }
+  if (selectedColumn.value <= instrumentColumnWidth) {
+    return 1;
+  } else {
+    return 2;
+  }
+});
+
+const selectedColumnChar = computed(() => {
+  if (selectedColumnIndex.value == 0)
+  {
+    return 0;
+
+  } if (selectedColumnIndex.value == 1)
+  {
+    return (selectedColumnIndex.value * selectedColumn.value) - 1;
+
+  } if (selectedColumnIndex.value == 2)
+  {
+    return Math.abs(selectedColumnIndex.value - selectedColumn.value + 1);
+    
+  }
+
 });
 
 var channelThis: HTMLElement | null = null;
@@ -66,6 +92,22 @@ function handleKeyboard(event: KeyboardEvent) {
       ChannelNeedlePosition.value = 0;
     }
   }
+
+  if (event.key == "ArrowRight") {
+    selectedColumn.value++;
+
+    if (selectedColumn.value > maxColumnWidth - 1) {
+      selectedColumn.value = 0;
+    }
+  }
+
+  if (event.key == "ArrowLeft") {
+    selectedColumn.value--;
+
+    if (selectedColumn.value < 0) {
+      selectedColumn.value = maxColumnWidth - 1;
+    }
+  }
 }
 </script>
 
@@ -98,9 +140,19 @@ function handleKeyboard(event: KeyboardEvent) {
         ]"
         :id="'viewnote-' + note.UID"
       >
-        <p>000</p>
-        <p>{{ note.instrument_number.toString().padStart(2, "0") }}</p>
-        <p>{{ note.effect_string }}</p>
+        <p :class="selectedColumnIndex == 0 ? 'selected' : ''">000</p>
+        
+        <p class="multichar">
+          <p v-for="(char, index) in note.instrument_number.toString().padStart(2, '0')" :key="index" :class="selectedColumnIndex == 1 && selectedColumnChar == index ? 'selected' : ''">
+            {{char}}
+          </p>
+        </p>
+ 
+        <p class="multichar">
+          <p v-for="(char, index) in note.effect_string" :key="index" :class="selectedColumnIndex == 2 && selectedColumnChar == index ? 'selected' : ''">
+            {{char}}
+          </p>
+        </p>
       </li>
     </ol>
   </div>
@@ -136,6 +188,11 @@ ol:focus-within {
   color: var(--text-muted);
 }
 
+p.multichar
+{
+  display: flex;
+}
+
 .pattern-line:focus {
   outline: none;
 }
@@ -147,5 +204,10 @@ ol:focus-within {
 .pattern-line.selected.focused {
   background: var(--background-tertiary);
   color: var(--text-normal);
+}
+
+.pattern-line.focused.selected p.selected {
+  color: var(--text-bright);
+  text-decoration: underline;
 }
 </style>
