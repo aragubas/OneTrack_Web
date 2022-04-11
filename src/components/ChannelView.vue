@@ -1,15 +1,29 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import {
   Channels,
   MatrixPosition,
   PatternMatrix,
-  ChannelNeddlePosition,
+  ChannelNeedlePosition,
   PatternLength,
 } from "../SongData";
 
 const props = defineProps({ channelID: { required: true, type: Number } });
 let selectedColumn = ref(0);
+
+const noteColumnWidth = 1;
+const instrumentColumnWidth = 2;
+const effectColumnWidth = 8;
+
+const selectedColumnIndex = computed(() => {
+  return selectedColumn.value * noteColumnWidth;
+});
+
+var channelThis: HTMLElement | null = null;
+
+onMounted(() => {
+  channelThis = document.getElementById("pattern-matrix");
+});
 
 let currentPattern = ref(
   Channels.value[props.channelID].Patterns[
@@ -17,39 +31,38 @@ let currentPattern = ref(
   ]
 );
 
-watch(ChannelNeddlePosition, () => {
+// Change selected pattern when needle position changes
+watch(ChannelNeedlePosition, () => {
   // Scroll element into view
   var el = document.getElementById(
     "viewnote-" +
       Channels.value[props.channelID].Patterns[
         PatternMatrix.value[MatrixPosition.value].Pattern[props.channelID]
           .Pattern
-      ].Notes[ChannelNeddlePosition.value].UID
+      ].Notes[ChannelNeedlePosition.value].UID
   );
 
   if (el != null) {
     el.scrollIntoView({
-      behavior: "smooth",
       block: "center",
-      inline: "start",
     });
   }
 });
 
 function handleKeyboard(event: KeyboardEvent) {
   if (event.key == "ArrowUp") {
-    ChannelNeddlePosition.value--;
+    ChannelNeedlePosition.value--;
 
-    if (ChannelNeddlePosition.value < 0) {
-      ChannelNeddlePosition.value = PatternLength.value - 1;
+    if (ChannelNeedlePosition.value < 0) {
+      ChannelNeedlePosition.value = PatternLength.value - 1;
     }
   }
 
   if (event.key == "ArrowDown") {
-    ChannelNeddlePosition.value++;
+    ChannelNeedlePosition.value++;
 
-    if (ChannelNeddlePosition.value > PatternLength.value - 1) {
-      ChannelNeddlePosition.value = 0;
+    if (ChannelNeedlePosition.value > PatternLength.value - 1) {
+      ChannelNeedlePosition.value = 0;
     }
   }
 }
@@ -67,13 +80,13 @@ function handleKeyboard(event: KeyboardEvent) {
       </nav>
     </div>
 
-    <ol tabindex="1" @keydown="handleKeyboard">
+    <ol tabindex="0" @keydown="handleKeyboard">
       <li
         class="pattern-line"
         v-for="note in currentPattern.Notes"
         :key="note.UID"
         tabindex="0"
-        :class="ChannelNeddlePosition == note.index ? 'selected' : ''"
+        :class="ChannelNeedlePosition == note.index ? 'selected' : ''"
         :id="'viewnote-' + note.UID"
       >
         <p>000</p>
@@ -88,14 +101,17 @@ function handleKeyboard(event: KeyboardEvent) {
 .container {
   display: flex;
   flex-flow: column;
-  width: 12rem;
-
-  height: 100%;
-  padding: 0.4rem;
+  width: 8rem;
+  height: calc(100vh - 5rem);
 }
 
-li:focus {
-  outline: 2px solid red;
+ol {
+  overflow-y: hidden;
+  outline: 2px solid var(--background-secondary);
+}
+
+ol:focus-within {
+  outline: 2px solid var(--background-secondary-alt);
 }
 
 .top-toolbar {

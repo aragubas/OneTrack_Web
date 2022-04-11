@@ -20,6 +20,7 @@ main {
 
 ol {
   display: flex;
-  gap: 1.5rem;
+  padding: 0.5rem;
+  gap: 0.2rem;
 }
 </style>

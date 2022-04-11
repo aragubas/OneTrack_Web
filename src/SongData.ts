@@ -3,9 +3,9 @@ import { ref } from "vue";
 export var Channels = ref(Array<Channel>());
 export var PatternMatrix = ref(Array<PatternMatrixLine>());
 export var ChannelCount = ref(2);
-export var PatternLength = ref(16);
+export var PatternLength = ref(64);
 export var MatrixPosition = ref(0);
-export var ChannelNeddlePosition = ref(0);
+export var ChannelNeedlePosition = ref(0);
 
 class PatternLine {
   ID: number;

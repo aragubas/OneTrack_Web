@@ -15,12 +15,6 @@ function getTrackNumber(number: number): string {
   return pointer + lineNumber;
 }
 
-var patternThis: HTMLElement | null = null;
-
-onMounted(() => {
-  patternThis = document.getElementById("pattern-matrix");
-});
-
 // Scroll relevant matrix line into view when matrix position changes
 watch(MatrixPosition, () => {
   // Scroll element into view
