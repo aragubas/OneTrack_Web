@@ -119,7 +119,8 @@ function handleKeyboard(event: KeyboardEvent) {
     let key = event.key;
     let note = Notes.C;
 
-    if (key.length > 1) { return; }
+    if (key.length > 1 || key == " ") { return; }
+    console.log(`'${key}'`);
 
     let checkingNote = Notes.C;
 
