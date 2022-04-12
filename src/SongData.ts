@@ -120,18 +120,18 @@ export function AddPattern(channelID: number) {
 }
 
 export enum Notes {
-  C0 = 16,
-  Cs0 = 17,
-  D0 = 18,
-  Ds0 = 19,
-  E0 = 20,
-  F0 = 21,
-  Fs0 = 23,
-  G0 = 24,
-  Gs0 = 25,
-  A0 = 27,
-  As0 = 29,
-  B0 = 30,
+  C = 16,
+  Cs = 17,
+  D = 18,
+  Ds = 19,
+  E = 20,
+  F = 21,
+  Fs = 23,
+  G = 24,
+  Gs = 25,
+  A = 27,
+  As = 29,
+  B = 0,
   C1 = 32,
   Cs1 = 34,
   D1 = 36,
@@ -228,6 +228,336 @@ export enum Notes {
   A8 = 7040,
   As8 = 7458,
   B8 = 7902,
+}
+
+export function GetNoteByScale(note: Notes, scale: number): Notes {
+  switch (note) {
+    case Notes.C:
+      switch (scale) {
+        case 1:
+          return Notes.C1;
+
+        case 2:
+          return Notes.C2;
+
+        case 3:
+          return Notes.C3;
+
+        case 4:
+          return Notes.C4;
+
+        case 5:
+          return Notes.C5;
+
+        case 6:
+          return Notes.C6;
+
+        case 7:
+          return Notes.C7;
+
+        case 8:
+          return Notes.C8;
+      }
+
+    case Notes.Cs:
+      switch (scale) {
+        case 1:
+          return Notes.Cs1;
+
+        case 2:
+          return Notes.Cs2;
+
+        case 3:
+          return Notes.Cs3;
+
+        case 4:
+          return Notes.Cs4;
+
+        case 5:
+          return Notes.Cs5;
+
+        case 6:
+          return Notes.Cs6;
+
+        case 7:
+          return Notes.Cs7;
+
+        case 8:
+          return Notes.Cs8;
+      }
+
+    case Notes.D:
+      switch (scale) {
+        case 1:
+          return Notes.D1;
+
+        case 2:
+          return Notes.D2;
+
+        case 3:
+          return Notes.D3;
+
+        case 4:
+          return Notes.D4;
+
+        case 5:
+          return Notes.D5;
+
+        case 6:
+          return Notes.D6;
+
+        case 7:
+          return Notes.D7;
+
+        case 8:
+          return Notes.D8;
+      }
+
+    case Notes.Ds:
+      switch (scale) {
+        case 1:
+          return Notes.Ds1;
+
+        case 2:
+          return Notes.Ds2;
+
+        case 3:
+          return Notes.Ds3;
+
+        case 4:
+          return Notes.Ds4;
+
+        case 5:
+          return Notes.Ds5;
+
+        case 6:
+          return Notes.Ds6;
+
+        case 7:
+          return Notes.Ds7;
+
+        case 8:
+          return Notes.Ds8;
+      }
+
+    case Notes.E:
+      switch (scale) {
+        case 1:
+          return Notes.E1;
+
+        case 2:
+          return Notes.E2;
+
+        case 3:
+          return Notes.E3;
+
+        case 4:
+          return Notes.E4;
+
+        case 5:
+          return Notes.E5;
+
+        case 6:
+          return Notes.E6;
+
+        case 7:
+          return Notes.E7;
+
+        case 8:
+          return Notes.E8;
+      }
+
+    case Notes.F:
+      switch (scale) {
+        case 1:
+          return Notes.F1;
+
+        case 2:
+          return Notes.F2;
+
+        case 3:
+          return Notes.F3;
+
+        case 4:
+          return Notes.F4;
+
+        case 5:
+          return Notes.F5;
+
+        case 6:
+          return Notes.F6;
+
+        case 7:
+          return Notes.F7;
+
+        case 8:
+          return Notes.F8;
+      }
+
+    case Notes.Fs:
+      switch (scale) {
+        case 1:
+          return Notes.Fs1;
+
+        case 2:
+          return Notes.Fs2;
+
+        case 3:
+          return Notes.Fs3;
+
+        case 4:
+          return Notes.Fs4;
+
+        case 5:
+          return Notes.Fs5;
+
+        case 6:
+          return Notes.Fs6;
+
+        case 7:
+          return Notes.Fs7;
+
+        case 8:
+          return Notes.Fs8;
+      }
+
+    case Notes.G:
+      switch (scale) {
+        case 1:
+          return Notes.G1;
+
+        case 2:
+          return Notes.G2;
+
+        case 3:
+          return Notes.G3;
+
+        case 4:
+          return Notes.G4;
+
+        case 5:
+          return Notes.G5;
+
+        case 6:
+          return Notes.G6;
+
+        case 7:
+          return Notes.G7;
+
+        case 8:
+          return Notes.G8;
+      }
+
+    case Notes.Gs:
+      switch (scale) {
+        case 1:
+          return Notes.Gs1;
+
+        case 2:
+          return Notes.Gs2;
+
+        case 3:
+          return Notes.Gs3;
+
+        case 4:
+          return Notes.Gs4;
+
+        case 5:
+          return Notes.Gs5;
+
+        case 6:
+          return Notes.Gs6;
+
+        case 7:
+          return Notes.Gs7;
+
+        case 8:
+          return Notes.Gs8;
+      }
+
+    case Notes.A:
+      switch (scale) {
+        case 1:
+          return Notes.A1;
+
+        case 2:
+          return Notes.A2;
+
+        case 3:
+          return Notes.A3;
+
+        case 4:
+          return Notes.A4;
+
+        case 5:
+          return Notes.A5;
+
+        case 6:
+          return Notes.A6;
+
+        case 7:
+          return Notes.A7;
+
+        case 8:
+          return Notes.A8;
+      }
+
+    case Notes.As:
+      switch (scale) {
+        case 1:
+          return Notes.As1;
+
+        case 2:
+          return Notes.As2;
+
+        case 3:
+          return Notes.As3;
+
+        case 4:
+          return Notes.As4;
+
+        case 5:
+          return Notes.As5;
+
+        case 6:
+          return Notes.As6;
+
+        case 7:
+          return Notes.As7;
+
+        case 8:
+          return Notes.As8;
+      }
+
+    case Notes.B:
+      switch (scale) {
+        case 1:
+          return Notes.B1;
+
+        case 2:
+          return Notes.B2;
+
+        case 3:
+          return Notes.B3;
+
+        case 4:
+          return Notes.B4;
+
+        case 5:
+          return Notes.B5;
+
+        case 6:
+          return Notes.B6;
+
+        case 7:
+          return Notes.B7;
+
+        case 8:
+          return Notes.B8;
+      }
+  }
+
+  return Notes.C;
 }
 
 export function PitchToNote(pitch: number) {

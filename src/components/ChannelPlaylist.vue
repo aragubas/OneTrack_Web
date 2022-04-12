@@ -20,7 +20,8 @@ main {
 
 ol {
   display: flex;
+  height: calc(100vh - 6rem);
   padding: 0.5rem;
-  gap: 0.2rem;
+  gap: 4px;
 }
 </style>

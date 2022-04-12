@@ -8,7 +8,10 @@ import {
   PatternLength,
 Notes,
 Editor_CurrentScale,
+GetNoteByScale,
 } from "../SongData";
+
+import * as EditorState from "../EditorState";
 
 const props = defineProps({ channelID: { required: true, type: Number } });
 let selectedColumn = ref(0);
@@ -107,16 +110,72 @@ function handleKeyboard(event: KeyboardEvent) {
     }
   }
 
+  if (event.key == " ") {
+    EditorState.StartPlayMode();
+  }
+
   if (selectedColumnIndex.value == 0)
   {
     let key = event.key;
-    let note = Notes.C0;
+    let note = Notes.C;
+
     if (key.length > 1) { return; }
 
-    if (key == 'z')
+    let checkingNote = Notes.C;
+
+    switch(key)
     {
-      console.log(Notes);
+      case 'z':
+        checkingNote = Notes.C;
+        break;
+
+      case 's':
+        checkingNote = Notes.Cs;
+        break;
+
+      case 'x':
+        checkingNote = Notes.D;
+        break;
+
+      case 'd':
+        checkingNote = Notes.Ds;
+        break;
+
+      case 'c':
+        checkingNote = Notes.E;
+        break;
+
+      case 'v':
+        checkingNote = Notes.F;
+        break;
+
+      case 'g':
+        checkingNote = Notes.Fs;
+        break;
+
+      case 'b':
+        checkingNote = Notes.G;
+        break;
+
+      case 'h':
+        checkingNote = Notes.Gs;
+        break;
+
+      case 'n':
+        checkingNote = Notes.A;
+        break;
+
+      case 'j':
+        checkingNote = Notes.As;
+        break;
+
+      case 'm':
+        checkingNote = Notes.B;
+        break;
+
     }
+
+    note = GetNoteByScale(checkingNote, Editor_CurrentScale.value);
  
     currentPattern.value.Notes[ChannelNeedlePosition.value].pitch = note;
   }
@@ -124,7 +183,7 @@ function handleKeyboard(event: KeyboardEvent) {
 
 function getNoteString(pitch: number): string
 {
-  return Notes[pitch].padEnd(3, '-');
+  return Notes[pitch].padEnd(3, '-').replace('s', '#');
 }
 
 </script>
@@ -181,7 +240,7 @@ function getNoteString(pitch: number): string
   display: flex;
   flex-flow: column;
   width: 8rem;
-  height: calc(100vh - 5rem);
+  height: 100%;
 }
 
 ol {

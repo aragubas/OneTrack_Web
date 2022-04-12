@@ -2,12 +2,14 @@
 import TopPanel from "./components/TopPanel.vue";
 import PatternMatrix from "./components/PatternMatrix.vue";
 import ChannelPlaylist from "./components/ChannelPlaylist.vue";
+import TopToolbar from "./components/TopToolbar.vue";
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 </script>
 
 <template>
   <TopPanel></TopPanel>
+  <TopToolbar></TopToolbar>
   <ChannelPlaylist></ChannelPlaylist>
 </template>
 
@@ -52,6 +54,7 @@ body {
 #app {
   display: flex;
   flex-flow: column;
+  height: 100vh;
 }
 
 h1,
