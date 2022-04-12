@@ -110,6 +110,14 @@ function handleKeyboard(event: KeyboardEvent) {
     }
   }
 
+  if (event.key == "Home") {
+    ChannelNeedlePosition.value = 0;
+  }
+
+  if (event.key == "End") {
+    ChannelNeedlePosition.value = PatternLength.value - 1;
+  }
+
   if (event.key == " ") {
     if (!EditorState.Playing.value)
     {

@@ -25,7 +25,7 @@ export function StopPlayMode() {
 
 class ToneGenerator {
   lastNote: number;
-  bufferSource: AudioBufferSourceNode;
+  bufferSource: AudioBufferSourceNode | undefined; 
 
   constructor() {
     this.lastNote = 0;
@@ -60,17 +60,7 @@ class ToneGenerator {
         this.bufferSource.loop = true;
         this.bufferSource.connect(audioContext!.destination);
         this.bufferSource.start();
-    
-        // this.bufferSource.buffer?.copyToChannel(audioBuffer, 0);
-
-
-        // this.bufferSource.buffer?.copyToChannel(new Float32Array(audioBuffer), 0);
-        // if (!this.bufferSource.buffer)
-        // {
-        //   this.bufferSource.buffer = this.buffer;
-        // }
-                
-
+ 
       } else
       {
         this.bufferSource!.stop();
@@ -118,7 +108,7 @@ export function StartPlayMode() {
         StopPlayMode();
       }
     }
-  }, (60 / BPM) * 1000);
+  }, (60000 / BPM));
 }
 
 export function Play(array: Array<number>) {
