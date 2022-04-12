@@ -103,7 +103,13 @@ export function NewFile() {
     Channels.value.push(new Channel(i, patterns));
   }
 
-  console.log(Channels.value);
+  Channels.value[0].Patterns[0].Notes[0].pitch = Notes.D5;
+  Channels.value[0].Patterns[0].Notes[1].pitch = Notes.E5;
+  Channels.value[0].Patterns[0].Notes[2].pitch = Notes.Fs4;
+
+  Channels.value[0].Patterns[0].Notes[4].pitch = Notes.Fs4;
+
+  Channels.value[0].Patterns[0].Notes[6].pitch = Notes.Fs4;
 }
 
 export function AddPattern(channelID: number) {
@@ -120,6 +126,8 @@ export function AddPattern(channelID: number) {
 }
 
 export enum Notes {
+  EMPTY = 0,
+  STOP_NOTE = -1,
   C = 16,
   Cs = 17,
   D = 18,
@@ -131,7 +139,7 @@ export enum Notes {
   Gs = 25,
   A = 27,
   As = 29,
-  B = 0,
+  B = 30,
   C1 = 32,
   Cs1 = 34,
   D1 = 36,
@@ -258,6 +266,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.C8;
       }
+      break;
 
     case Notes.Cs:
       switch (scale) {
@@ -285,6 +294,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.Cs8;
       }
+      break;
 
     case Notes.D:
       switch (scale) {
@@ -312,6 +322,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.D8;
       }
+      break;
 
     case Notes.Ds:
       switch (scale) {
@@ -339,6 +350,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.Ds8;
       }
+      break;
 
     case Notes.E:
       switch (scale) {
@@ -366,6 +378,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.E8;
       }
+      break;
 
     case Notes.F:
       switch (scale) {
@@ -393,6 +406,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.F8;
       }
+      break;
 
     case Notes.Fs:
       switch (scale) {
@@ -420,6 +434,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.Fs8;
       }
+      break;
 
     case Notes.G:
       switch (scale) {
@@ -447,6 +462,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.G8;
       }
+      break;
 
     case Notes.Gs:
       switch (scale) {
@@ -474,6 +490,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.Gs8;
       }
+      break;
 
     case Notes.A:
       switch (scale) {
@@ -501,6 +518,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.A8;
       }
+      break;
 
     case Notes.As:
       switch (scale) {
@@ -528,6 +546,7 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.As8;
       }
+      break;
 
     case Notes.B:
       switch (scale) {
@@ -555,6 +574,15 @@ export function GetNoteByScale(note: Notes, scale: number): Notes {
         case 8:
           return Notes.B8;
       }
+      break;
+
+    case -1: {
+      return Notes.STOP_NOTE;
+    }
+
+    case 0: {
+      return Notes.EMPTY;
+    }
   }
 
   return Notes.C;

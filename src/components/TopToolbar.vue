@@ -3,7 +3,7 @@ import { Playing } from "../EditorState";
 </script>
 
 <template>
-  <nav>
+  <nav :class="Playing ? 'playing' : ''">
     <ul>
       <li>
         <p>{{ Playing ? "Playing" : "Stopped" }}</p>
@@ -14,10 +14,15 @@ import { Playing } from "../EditorState";
 
 <style scoped>
 nav {
+  transition: background-color 0.5s linear;
   display: flex;
   align-items: center;
   height: 1rem;
   padding: 0 0.5rem;
-  background: var(--background-secondary);
+  background-color: var(--background-secondary);
+}
+
+nav.playing {
+  background-color: var(--background-accent);
 }
 </style>

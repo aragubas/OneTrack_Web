@@ -24,9 +24,8 @@ watch(MatrixPosition, () => {
 
   if (el != null) {
     el.scrollIntoView({
-      behavior: "smooth",
       block: "center",
-      inline: "start",
+      inline: "center",
     });
   }
 });

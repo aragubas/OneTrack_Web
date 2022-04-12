@@ -111,16 +111,21 @@ function handleKeyboard(event: KeyboardEvent) {
   }
 
   if (event.key == " ") {
-    EditorState.StartPlayMode();
+    if (!EditorState.Playing.value)
+    {
+      EditorState.StartPlayMode();
+    }else
+    {
+      EditorState.StopPlayMode();
+    }
   }
 
-  if (selectedColumnIndex.value == 0)
+  if (selectedColumnIndex.value == 0 && !EditorState.Playing.value)
   {
     let key = event.key;
     let note = Notes.C;
 
     if (key.length > 1 || key == " ") { return; }
-    console.log(`'${key}'`);
 
     let checkingNote = Notes.C;
 
@@ -174,17 +179,38 @@ function handleKeyboard(event: KeyboardEvent) {
         checkingNote = Notes.B;
         break;
 
+      // Empty
+      case '-':
+        checkingNote = Notes.EMPTY;
+        break;
+
+      // Stop Note
+      case "'":
+        checkingNote = Notes.STOP_NOTE;
+        break;
+
     }
 
     note = GetNoteByScale(checkingNote, Editor_CurrentScale.value);
- 
+
     currentPattern.value.Notes[ChannelNeedlePosition.value].pitch = note;
   }
 }
 
 function getNoteString(pitch: number): string
 {
-  return Notes[pitch].padEnd(3, '-').replace('s', '#');
+  if (pitch == Notes.EMPTY)
+  {
+    return '___';
+
+  }else if (pitch == Notes.STOP_NOTE)
+  {
+    return '---';
+
+  }else
+  {
+    return Notes[pitch].padEnd(3, '-').replace('s', '#');
+  }
 }
 
 </script>
@@ -218,7 +244,7 @@ function getNoteString(pitch: number): string
         ]"
         :id="'viewnote-' + note.UID"
       >
-        <p :class="selectedColumnIndex == 0 ? 'selected' : ''">{{note.pitch < 16 ? '---' : getNoteString(note.pitch)}}</p>
+        <p :class="[selectedColumnIndex == 0 ? 'selected' : '', note.pitch == -1 ? 'stop-note' : '']">{{getNoteString(note.pitch)}}</p>
         
         <p class="multichar">
           <p v-for="(char, index) in note.instrument_number.toString().padStart(2, '0')" :key="index" :class="selectedColumnIndex == 1 && selectedColumnChar == index ? 'selected' : ''">
@@ -269,6 +295,12 @@ ol:focus-within {
 p.multichar
 {
   display: flex;
+}
+
+.stop-note
+{
+  font-weight: bolder;
+  text-shadow: 0px 0px 2px white;
 }
 
 .pattern-line:focus {
