@@ -9,11 +9,12 @@ import {
 
 export let Playing = ref(false);
 
-let audioContext = new AudioContext();
+let audioContext: AudioContext | undefined = undefined;
+
 let mixerIntervalID = 0;
 
 function Sinewave(time: number, tone: number) {
-  let sampleFreq = audioContext.sampleRate / tone;
+  let sampleFreq = audioContext!.sampleRate / tone;
   return Math.sin(time / ((sampleFreq / Math.PI) * 2));
 }
 
@@ -22,16 +23,78 @@ export function StopPlayMode() {
   Playing.value = false;
 }
 
+class ToneGenerator {
+  lastNote: number;
+  bufferSource: AudioBufferSourceNode;
+
+  constructor() {
+    this.lastNote = 0;
+  }
+
+  Play(pitch: number) {
+    if (this.lastNote != pitch && pitch != 0) {
+      this.lastNote = pitch;
+
+      // Not a stop note
+      if (pitch != -1) {
+        // Generates new buffer
+        let duration = 1;
+        let frames = audioContext!.sampleRate * duration;
+        let audioBuffer = new Float32Array(frames);
+
+        for (let i = 0; i < frames; i++) {
+          audioBuffer[i] = Sinewave(i, pitch) * 0.5;
+        }
+        
+        
+        const newBuffer = audioContext!.createBuffer(1, frames, audioContext!.sampleRate);
+        newBuffer.copyToChannel(audioBuffer, 0);
+
+        // Stops the last buffer
+        this.bufferSource?.stop();
+        // console.log("ceira")
+
+        this.bufferSource = new AudioBufferSourceNode(audioContext!);
+
+        this.bufferSource.buffer = newBuffer; 
+        this.bufferSource.loop = true;
+        this.bufferSource.connect(audioContext!.destination);
+        this.bufferSource.start();
+    
+        // this.bufferSource.buffer?.copyToChannel(audioBuffer, 0);
+
+
+        // this.bufferSource.buffer?.copyToChannel(new Float32Array(audioBuffer), 0);
+        // if (!this.bufferSource.buffer)
+        // {
+        //   this.bufferSource.buffer = this.buffer;
+        // }
+                
+
+      } else
+      {
+        this.bufferSource!.stop();
+      }
+
+
+    }
+  }
+}
+
 export function StartPlayMode() {
+  if (audioContext == undefined) {
+    audioContext = new AudioContext();
+  }
   Playing.value = true;
 
-  let BPM = 20;
+  let BPM = 126;
+
+  const tone = new ToneGenerator();
 
   mixerIntervalID = setInterval(() => {
-    console.log("Mixer");
     // Playing.value = false;
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 1; i++) {
       let patternMatrixLine =
         PatternMatrix.value[MatrixPosition.value].Pattern[i].Pattern;
 
@@ -39,7 +102,9 @@ export function StartPlayMode() {
 
       let currentNote = currentChannel.Notes[ChannelNeedlePosition.value];
 
-      console.log(currentNote);
+      tone.Play(currentNote.pitch);
+
+      // Play(audioBuffer);
     }
 
     ChannelNeedlePosition.value++;
@@ -53,16 +118,7 @@ export function StartPlayMode() {
         StopPlayMode();
       }
     }
-  }, (60 / BPM) * 100);
-
-  // let audioBuffer = [];
-  // let duration = 1;
-
-  // for (let i = 0; i < audioContext.sampleRate * duration; i++) {
-  //   audioBuffer[i] = Sinewave(i, 440) * 0.5;
-  // }
-
-  // Play(audioBuffer);
+  }, (60 / BPM) * 1000);
 }
 
 export function Play(array: Array<number>) {
@@ -71,15 +127,15 @@ export function Play(array: Array<number>) {
     fBuffer[i] = array[i];
   }
 
-  var buffer = audioContext.createBuffer(
+  var buffer = audioContext!.createBuffer(
     1,
     fBuffer.length,
-    audioContext.sampleRate
+    audioContext!.sampleRate
   );
   buffer.copyToChannel(fBuffer, 0);
 
-  var source = audioContext.createBufferSource();
+  var source = audioContext!.createBufferSource();
   source.buffer = buffer;
-  source.connect(audioContext.destination);
+  source.connect(audioContext!.destination);
   source.start();
 }

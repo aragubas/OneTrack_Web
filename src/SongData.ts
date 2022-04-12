@@ -105,11 +105,13 @@ export function NewFile() {
 
   Channels.value[0].Patterns[0].Notes[0].pitch = Notes.D5;
   Channels.value[0].Patterns[0].Notes[1].pitch = Notes.E5;
-  Channels.value[0].Patterns[0].Notes[2].pitch = Notes.Fs4;
+  Channels.value[0].Patterns[0].Notes[2].pitch = Notes.Fs5;
 
-  Channels.value[0].Patterns[0].Notes[4].pitch = Notes.Fs4;
+  Channels.value[0].Patterns[0].Notes[4].pitch = Notes.Fs5;
 
-  Channels.value[0].Patterns[0].Notes[6].pitch = Notes.Fs4;
+  Channels.value[0].Patterns[0].Notes[6].pitch = Notes.Fs5;
+
+  Channels.value[0].Patterns[0].Notes[8].pitch = Notes.STOP_NOTE;
 }
 
 export function AddPattern(channelID: number) {

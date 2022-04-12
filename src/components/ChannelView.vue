@@ -125,7 +125,7 @@ function handleKeyboard(event: KeyboardEvent) {
     let key = event.key;
     let note = Notes.C;
 
-    if (key.length > 1 || key == " ") { return; }
+    if ((key.length > 1 && key != "Delete") || key == " ") { return; }
 
     let checkingNote = Notes.C;
 
@@ -181,6 +181,11 @@ function handleKeyboard(event: KeyboardEvent) {
 
       // Empty
       case '-':
+        checkingNote = Notes.EMPTY;
+        break;
+
+      // Empty
+      case 'Delete':
         checkingNote = Notes.EMPTY;
         break;
 
@@ -300,7 +305,7 @@ p.multichar
 .stop-note
 {
   font-weight: bolder;
-  text-shadow: 0px 0px 2px white;
+  text-shadow: 0px 0px 3px white;
 }
 
 .pattern-line:focus {
